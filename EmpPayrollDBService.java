@@ -62,14 +62,19 @@ public class EmpPayrollDBService {
 			connection = (Connection) DriverManager.getConnection(jdbcURL, UserName, password);
 			System.out.println("Connection is successful!: " + connection);
 			Statement mystatement = (Statement) connection.createStatement();
-			/*
-			 * update the salary of Employee Terisa to 3000000.00
-			 */
-			Integer query = mystatement.executeUpdate("update employee_payroll set salary= '300000' where nmae = 'Terisa'");
+			/*Add new employee in database*/
+String query = "insert into employee_payroll (name, gender, PhoneNumber, Department, salary,start) values (?, ?, ?, ?, ?, ?)";
 			
 			PreparedStatement preparedst = (PreparedStatement)connection.prepareStatement(query);
-			int recordupdate = preparedst.executeUpdate();
-			System.out.println("Records updated " +recordupdate);
+			preparedst.setString(1, "jaon");
+			preparedst.setString(2, "M");
+			preparedst.setString(3, "2356");			
+			preparedst.setString(4, "Mechanical Engineering");
+			preparedst.setInt(5, 30000);
+			preparedst.setDate(6, java.sql.Date.valueOf("2021-02-09"));
+			
+			int recordInsert = preparedst.executeUpdate();
+			System.out.println(recordInsert);
 			ResultSet result = mystatement.executeQuery("Select * from employee_payroll");
 			// Store EmployeeDetails with use of linkedlist
 			List<EmployeePayroll> employeeList = new LinkedList<EmployeePayroll>();
