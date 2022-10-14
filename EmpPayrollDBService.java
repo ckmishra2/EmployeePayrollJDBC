@@ -10,7 +10,9 @@ import java.util.function.Consumer;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Driver;
+import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
+import com.mysql.jdbc.PreparedStatement;
 
 class EmployeePayroll {
 	int id;
@@ -63,9 +65,11 @@ public class EmpPayrollDBService {
 			/*
 			 * update the salary of Employee Terisa to 3000000.00
 			 */
-			Double updatedSalary = (double) mystatement
-					.executeUpdate("update employee_payroll set salary= '3000000.00' where name = ' Terisa'");
-			System.out.println("Terisa Salary " + updatedSalary);
+			Integer query = mystatement.executeUpdate("update employee_payroll set salary= '300000' where nmae = 'Terisa'");
+			
+			PreparedStatement preparedst = (PreparedStatement)connection.prepareStatement(query);
+			int recordupdate = preparedst.executeUpdate();
+			System.out.println("Records updated " +recordupdate);
 			ResultSet result = mystatement.executeQuery("Select * from employee_payroll");
 			// Store EmployeeDetails with use of linkedlist
 			List<EmployeePayroll> employeeList = new LinkedList<EmployeePayroll>();
